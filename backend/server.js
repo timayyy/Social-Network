@@ -2,6 +2,9 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
 
+//Notfound and Error middleware 
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+
 //Connect database file 
 const connectDB = require("./config/db");
 
@@ -29,6 +32,10 @@ app.get("/", (req, res) => {
 //Mounting our routes
 app.use('/api/users', userRoutes)
 
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5005;
 
