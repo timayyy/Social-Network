@@ -9,8 +9,9 @@ const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 
 //Routes 
-
 const userRoutes = require("./routes/userRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const postRoutes = require("./routes/postRoutes");
 
 //DotENV config
 dotenv.config();
@@ -31,6 +32,8 @@ app.get("/", (req, res) => {
 
 //Mounting our routes
 app.use('/api/users', userRoutes)
+app.use('/api/profile', profileRoutes)
+app.use('/api/posts', postRoutes)
 
 
 app.use(notFound);

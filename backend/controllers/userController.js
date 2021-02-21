@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const gravatar = require('gravatar');
-const { check, validationResult } = require('express-validator');
 
 const User = require("../models/userModel");
 
@@ -19,10 +18,10 @@ const testRoute = asyncHandler(async (req, res) => {
 // @dec         Register a User
 // @access      Public
 const registerUser = asyncHandler(async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
     const { name, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
