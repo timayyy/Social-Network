@@ -92,5 +92,80 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     res.json(req.user)
 })
 
+// @route       GET api/users/follow
+// @dec         Follow a user
+// @access      Private
+const followUser = asyncHandler(async (req, res) => {
+    const { followId } = req.body
 
-module.exports = { testRoute, registerUser, loginUser, getCurrentUser }
+    const leader = await User.findById(followId).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
+
+    if (!leader) {
+        res.status(401);
+        throw new Error("User not found");
+    }
+
+    // Check if already following user
+    if (leader.followers.some((follower) => follower.user.toString() === req.user.id)) {
+        res.status(400);
+        throw new Error('Already following this user');
+    }
+
+    //Add follower
+    leader.followers.unshift({
+        user: req.user.id,
+        name: user.name,
+        avatar: user.avatar,
+    });
+
+    //Add following
+    user.following.unshift({
+        user: followId,
+        name: leader.name,
+        avatar: leader.avatar,
+    });
+
+    await leader.save();
+    await user.save()
+
+    res.json({ leader: leader.followers, user: user.following });
+})
+
+// @route       GET api/users/follow
+// @dec         Follow a user
+// @access      Private
+const unfollowUser = asyncHandler(async (req, res) => {
+    const { followId } = req.body
+
+    const leader = await User.findById(followId).select('-password');
+    const user = await User.findById(req.user.id).select('-password');
+
+    if (!leader) {
+        res.status(401);
+        throw new Error("User not found");
+    }
+
+    // Check if not yet following user
+    if (!leader.followers.some((follower) => follower.user.toString() === req.user.id)) {
+        res.status(400);
+        throw new Error('Cannot unfollow user');
+    }
+
+    //Remove follower
+    leader.followers = leader.followers.filter(
+        ({ user }) => user.toString() !== req.user.id
+    );
+
+    //Remove following
+    user.following = user.following.filter(
+        ({ user }) => user.toString() !== followId
+    );
+
+    await leader.save();
+    await user.save()
+
+    res.json({ leader: leader.followers, user: user.following });
+})
+
+module.exports = { testRoute, registerUser, loginUser, getCurrentUser, followUser, unfollowUser }

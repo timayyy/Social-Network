@@ -3,6 +3,7 @@ const {
     testRoute,
     createPost,
     getAllPosts,
+    getFollowersPosts,
     getPostById,
     deletePostById,
     likePost,
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.route("/test").get(testRoute);
 router.route("/").post(protect, userPostValidationRules(), validate, createPost).get(getAllPosts)
+router.route("/getfollowersposts").get(protect, getFollowersPosts)
 router.route("/:id").get(getPostById).delete(protect, deletePostById)
 router.route("/like/:id").put(protect, likePost)
 router.route("/unlike/:id").put(protect, unlikePost)

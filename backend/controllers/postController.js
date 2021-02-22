@@ -40,6 +40,20 @@ const getAllPosts = asyncHandler(async (req, res) => {
     res.json(posts)
 })
 
+// @route       GET api/posts
+// @dec         Get followers posts
+// @access      Public
+const getFollowersPosts = asyncHandler(async (req, res) => {
+    const customArray = []
+
+    req.user.following.forEach(following => {
+        customArray.push(following.user.toString())
+    })
+    const followersPosts = await Post.find({ user: { $in: customArray } }).sort({ date: -1 })
+
+    res.json(followersPosts)
+})
+
 // @route       GET api/posts/:id
 // @dec         Get a post by ID
 // @access      Public
@@ -206,6 +220,7 @@ module.exports = {
     testRoute,
     createPost,
     getAllPosts,
+    getFollowersPosts,
     getPostById,
     deletePostById,
     likePost,

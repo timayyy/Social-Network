@@ -18,6 +18,38 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
+    following: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+        },
+        name: {
+            type: String
+        },
+        avatar: {
+            type: String
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    followers: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
+        },
+        name: {
+            type: String
+        },
+        avatar: {
+            type: String
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
