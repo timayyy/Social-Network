@@ -21,6 +21,7 @@ const createPost = asyncHandler(async (req, res) => {
 
     const newPost = await Post.create({
         text: req.body.text,
+        image: req.body.image !== null || req.body.image !== '' ? req.body.image : null,
         name: user.name,
         avatar: user.avatar,
         user: req.user.id
