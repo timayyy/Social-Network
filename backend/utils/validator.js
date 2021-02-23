@@ -33,13 +33,15 @@ const userRegisterValidationRules = () => {
         //Confirm Password field validation
         check('password2').custom((value, { req }) => {
             if (value !== req.body.password) {
-                console.log(req.body.password, req.body.password2);
                 throw new Error("Passwords must match")
             }
             return true;
         })
             // password2 is required
             .exists()
+            .withMessage("Confirm password field is required")
+            .not()
+            .isEmpty()
             .withMessage("Confirm password field is required"),
 
     ]
@@ -60,6 +62,9 @@ const userLoginValidationRules = () => {
         check('password')
             // password is required
             .exists()
+            .withMessage("Password field is required")
+            .not()
+            .isEmpty()
             .withMessage("Password field is required"),
     ]
 }
