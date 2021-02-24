@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 import Homescreen from './screens/HomeScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import ProfileScreen from './screens/ProfileScreen'
 import UserFeedsScreen from './screens/UserFeedsScreen'
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <main className='py-3'>
           <Container>
             <Route path='/feeds' component={UserFeedsScreen} />
+            <Route path='/dashboard' component={ProfileScreen} />
             <Route path='/login' component={LoginScreen} />
             <Route path='/signup' component={RegisterScreen} />
             <Route path='/' component={Homescreen} exact />

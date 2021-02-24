@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 // import Message from "../components/Message";
@@ -24,7 +24,7 @@ const RegisterScreen = ({ history, location }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (userInfo) {
-      console.log(userInfo)
+      <Redirect to="/dashboard" />
     }
   }, [userInfo]);
 

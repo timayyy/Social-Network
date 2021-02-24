@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css"
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -20,16 +20,14 @@ const LoginScreen = ({ history, location }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  // const redirect = location.search ? location.search.split("=")[1] : "/dashboard";
-  console.log(error)
+  const redirect = location.search ? location.search.split("=")[1] : "/dashboard";
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (userInfo) {
-      // history.push(redirect);
-      console.log(userInfo)
+      history.push(redirect)
     }
-  }, [history, userInfo]);
+  }, [userInfo, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

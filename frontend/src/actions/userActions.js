@@ -1,4 +1,5 @@
 import axios from "axios";
+import { GET_CURRENT_USER_PROFILE_RESET } from "../constants/profileConstants";
 import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -58,11 +59,9 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem("lmUserInfo");
+  localStorage.removeItem("devconUserInfo");
   dispatch({ type: USER_LOGOUT });
-  dispatch({ type: USER_DETAILS_RESET });
-  dispatch({ type: USER_UPDATE_PROFILE_RESET });
-  dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: GET_CURRENT_USER_PROFILE_RESET })
 };
 
 export const register = (name, email, password, password2) => async (dispatch) => {
@@ -97,13 +96,13 @@ export const register = (name, email, password, password2) => async (dispatch) =
       type: USER_REGISTER_FAIL,
       payload:
         error.response && error.response.data.errors
-          ? error.response.data.errors : error.response && error.response.data.message ? error.response.data.message
+          ? error.response.data.errors : error.response && error.response.data.message ? error.response.data
             : error.message
     });
   }
 };
 
-export const getUserDetails = (id) => async (dispatch, getState) => {
+export const getUserDetails = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -115,11 +114,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await axios.get(`/api/users/current`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -130,9 +128,9 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     dispatch({
       type: USER_DETAILS_FAIL,
       payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+        error.response && error.response.data.errors
+          ? error.response.data.errors : error.response && error.response.data.message ? error.response.data
+            : error.message
     });
   }
 };

@@ -1,8 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from 'react-router-bootstrap'
+import { logout } from "../actions/userActions";
 
 const Header = () => {
+    const dispatch = useDispatch();
 
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
+    const logoutHandler = () => {
+        //LOGOUT
+        dispatch(logout());
+    }
     return (
         <header class="header fixed-top">
             <div class="branding">
@@ -32,6 +43,9 @@ const Header = () => {
                                     <li class="nav-item mr-lg-0 mt-3 mt-lg-0">
                                         <Link class="btn custom-btn-primary text-white" to="/signup">Sign up</Link>
                                     </li>
+                                    {userInfo && (<LinkContainer to='/login'>
+                                        <button class="btn custom-btn-primary text-white" onClick={logoutHandler}>Logout</button>
+                                    </LinkContainer>)}
                                 </>
                             </ul>
                         </div>

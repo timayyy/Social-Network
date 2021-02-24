@@ -9,16 +9,9 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer
 } from "./reducers/userReducers";
-// import {
-//   leaveRequestListReducer,
-//   leaveRequestListMyReducer,
-//   leaveRequestCreateReducer,
-//   leaveRequestDetailsReducer,
-//   leaveRequestUpdateReducer,
-//   leaveRequestDeleteReducer,
-//   leaveRequestApproveReducer,
-//   leaveRequestRejectReducer
-// } from "./reducers/leaveRequestReducers";
+import {
+  currentUserProfileReducer
+} from "./reducers/profileReducers";
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -26,6 +19,7 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
+  currentUserProfile: currentUserProfileReducer
 });
 
 const userInfoFromStorage = localStorage.getItem("lmUserInfo")

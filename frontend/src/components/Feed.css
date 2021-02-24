@@ -1,0 +1,13 @@
+.feed__input {
+    width: 100%;
+}
+
+.feed__input > input {
+    width: 90%;
+    border-radius: 50px;
+    outline: none;
+    border: none;
+    background-color: #eef3f8;
+    height: 40px;
+    padding: 17px;
+}
